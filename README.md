@@ -52,20 +52,6 @@ You can install the required packages using:
 pip install pandas seaborn matplotlib
 ```
 
-## Usage
-
-To explore the data and visualize the results, simply run the Jupyter Notebook:
-
-```bash
-jupyter notebook Learner_Notebook.ipynb
-```
-
-## Example
-
-Here is an example of how to create a joint plot for `concavity_worst` and `concave points_worst`:
-
-```python
-import seaborn as sns
 
 sns.jointplot(x=x['concavity_worst'], y=x['concave points_worst'], kind="reg", color="#ce1414")
 ```
