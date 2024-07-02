@@ -4,9 +4,6 @@
 
 ![Dataset Cover](https://storage.googleapis.com/kaggle-datasets-images/180/384/3da2510581f9d3b902307ff8d06fe327/dataset-cover.jpg)
 
-## Introduction
-
-This project is an exploratory data analysis (EDA) of the Breast Cancer Diagnostic dataset. The goal is to gain insights into the dataset and prepare it for further analysis and modeling.
 
 ## About the Dataset
 
