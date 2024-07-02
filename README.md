@@ -51,7 +51,3 @@ You can install the required packages using:
 ```bash
 pip install pandas seaborn matplotlib
 ```
-
-
-sns.jointplot(x=x['concavity_worst'], y=x['concave points_worst'], kind="reg", color="#ce1414")
-```
