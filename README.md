@@ -2,6 +2,8 @@
 
 # Tumor Diagnosis (Part 1): Exploratory Data Analysis
 
+Kaggle Link - https://www.kaggle.com/code/rasikasrimal/tumor-diagnosis
+
 ![Dataset Cover](https://storage.googleapis.com/kaggle-datasets-images/180/384/3da2510581f9d3b902307ff8d06fe327/dataset-cover.jpg)
 
 
