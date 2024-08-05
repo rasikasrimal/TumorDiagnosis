@@ -1,6 +1,6 @@
 
 
-# Tumor Diagnosis (Part 1): Exploratory Data Analysis
+# Tumor Diagnosis : Exploratory Data Analysis
 
 Kaggle Link - https://www.kaggle.com/code/rasikasrimal/tumor-diagnosis
 
