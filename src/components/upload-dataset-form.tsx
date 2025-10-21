@@ -1,0 +1,74 @@
+'use client';
+
+import { FormEvent, useState } from 'react';
+import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
+
+interface UploadDatasetFormProps {
+  onComplete?: () => void;
+}
+
+export function UploadDatasetForm({ onComplete }: UploadDatasetFormProps) {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState<string>('');
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const fileInput = form.elements.namedItem('file') as HTMLInputElement | null;
+    const file = fileInput?.files?.[0];
+    if (!file) {
+      setStatus('error');
+      setMessage('Please choose a CSV or JSON file.');
+      return;
+    }
+
+    const body = new FormData();
+    body.append('file', file);
+
+    try {
+      setStatus('loading');
+      setMessage('Uploading…');
+      const res = await fetch('/api/upload/dataset', {
+        method: 'POST',
+        body
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || 'Upload failed');
+      }
+      setStatus('success');
+      setMessage('Dataset processed successfully.');
+      form.reset();
+      onComplete?.();
+    } catch (error) {
+      setStatus('error');
+      setMessage(error instanceof Error ? error.message : 'Upload failed');
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3 rounded-xl border border-border bg-background/60 p-5">
+      <div>
+        <h3 className="text-base font-semibold">Upload dataset</h3>
+        <p className="text-sm text-muted-foreground">Accepted formats: CSV and JSON. Data is stored in-memory only.</p>
+      </div>
+      <input
+        type="file"
+        name="file"
+        accept=".csv,.json,application/json,text/csv"
+        className="w-full rounded-md border border-border px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-2 file:text-sm file:font-medium"
+      />
+      <button
+        type="submit"
+        className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring"
+        disabled={status === 'loading'}
+      >
+        <ArrowUpTrayIcon className="h-4 w-4" />
+        {status === 'loading' ? 'Processing…' : 'Upload dataset'}
+      </button>
+      {message ? (
+        <p className={`text-xs ${status === 'error' ? 'text-destructive' : 'text-muted-foreground'}`}>{message}</p>
+      ) : null}
+    </form>
+  );
+}
