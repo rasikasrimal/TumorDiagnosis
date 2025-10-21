@@ -9,10 +9,15 @@ import { DataTable } from "@/components/data/DataTable";
 import { FiltersPanel } from "./FiltersPanel";
 import { ColumnsControl } from "./ColumnsControl";
 
-const parseList = (value?: string | string[]): string[] => {
-  if (!value) return [];
-  const input = Array.isArray(value) ? value[0] : value;
-  return input
+const parseList = (input: unknown): string[] => {
+  if (!input) return [];
+  if (Array.isArray(input)) {
+    return input
+      .flatMap((value) => String(value).split(","))
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return String(input)
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
@@ -28,8 +33,9 @@ const parseBoolean = (value?: string) => value === "1" || value === "true";
 export default async function ExplorePage({
   searchParams
 }: {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const sp = await searchParams;
   const [rows, columns] = await Promise.all([getCancerData(), getCancerColumns()]);
   if (!rows.length) {
     return (
@@ -41,12 +47,12 @@ export default async function ExplorePage({
 
   const availableFeatures = columns;
   const defaultFeatures = FEATURE_SHORTLIST.filter((feature) => availableFeatures.includes(feature)).slice(0, 6);
-  const selectedFromQuery = parseList(searchParams.features).filter((feature) => availableFeatures.includes(feature));
+  const selectedFromQuery = parseList(sp.features).filter((feature) => availableFeatures.includes(feature));
   const selectedFeatures = (selectedFromQuery.length ? selectedFromQuery : defaultFeatures.length ? defaultFeatures : availableFeatures.slice(0, 6)).slice(0, 12);
 
-  const diagnosisFilter = parseDiagnosis(searchParams.diagnosis as string | undefined);
-  const standardize = parseBoolean(searchParams.standardize as string | undefined);
-  const searchValue = (searchParams.search as string | undefined)?.toLowerCase() ?? "";
+  const diagnosisFilter = parseDiagnosis(sp.diagnosis as string | undefined);
+  const standardize = parseBoolean(sp.standardize as string | undefined);
+  const searchValue = (sp.search as string | undefined)?.toLowerCase() ?? "";
 
   const filteredRows = rows.filter((row) => {
     const matchesDiagnosis =
@@ -79,18 +85,18 @@ export default async function ExplorePage({
     : [];
 
   const tableColumns = (() => {
-    const requested = parseList(searchParams.columns).filter((feature) => availableFeatures.includes(feature));
+    const requested = parseList(sp.columns).filter((feature) => availableFeatures.includes(feature));
     if (!requested.length) {
       return selectedFeatures.length ? selectedFeatures : availableFeatures;
     }
     return requested;
   })();
 
-  const view = (searchParams.view as string | undefined) ?? "distributions";
+  const view = (sp.view as string | undefined) ?? "distributions";
 
   const makeViewLink = (target: string) => {
     const params = new URLSearchParams(
-      Object.entries(searchParams)
+      Object.entries(sp)
         .map(([key, value]) => [key, Array.isArray(value) ? value[0] : value])
         .filter(([key, value]) => value !== undefined && key !== "view") as [string, string][]
     );

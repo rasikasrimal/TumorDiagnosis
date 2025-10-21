@@ -25,7 +25,7 @@ export function SideNav({ onNavigate }: { onNavigate?: () => void }) {
             href={item.href}
             onClick={onNavigate}
             className={cn(
-              "flex items-center gap-3 rounded-md border border-[rgb(var(--border))] px-3 py-2 text-sm font-medium transition hover:ring-1 hover:ring-[rgb(var(--border))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]",
+              "flex items-center gap-2 rounded-md border border-[rgb(var(--border))] px-3 py-2 text-sm font-medium transition hover:ring-1 hover:ring-[rgb(var(--border))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]",
               active ? "bg-[rgb(var(--accent))]/10" : ""
             )}
           >

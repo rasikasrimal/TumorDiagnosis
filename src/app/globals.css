@@ -1,37 +1,12 @@
 @import "tailwindcss";
 
-:root {
-  --bg: 255 255 255;
-  --fg: 17 24 39;
-  --muted: 107 114 128;
-  --border: 229 231 235;
-  --accent: 37 99 235;
-  --benign: 16 185 129;
-  --malignant: 239 68 68;
-  color-scheme: light;
-}
-
-.dark {
-  --bg: 9 9 11;
-  --fg: 229 231 235;
-  --muted: 163 163 163;
-  --border: 39 39 42;
-  --accent: 96 165 250;
-  --benign: 52 211 153;
-  --malignant: 248 113 113;
-  color-scheme: dark;
-}
-
-* {
-  box-shadow: none !important;
-}
-
 body {
   @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))] font-sans antialiased;
 }
 
 a {
-  @apply text-accent underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] focus:ring-offset-2 focus:ring-offset-[rgb(var(--bg))];
+  color: rgb(var(--accent));
+  @apply underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] focus:ring-offset-2 focus:ring-offset-[rgb(var(--bg))];
 }
 
 :focus-visible {
@@ -70,4 +45,37 @@ a {
     text-decoration: none;
     color: inherit;
   }
+}
+
+:root {
+  --bg: 255 255 255;
+  --fg: 17 24 39;
+  --muted: 107 114 128;
+  --border: 229 231 235;
+  --accent: 37 99 235;
+  --benign: 16 185 129;
+  --malignant: 239 68 68;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: 9 9 11;
+  --fg: 229 231 235;
+  --muted: 163 163 163;
+  --border: 39 39 42;
+  --accent: 96 165 250;
+  --benign: 52 211 153;
+  --malignant: 248 113 113;
+  color-scheme: dark;
+}
+
+/* No shadows anywhere */
+* {
+  box-shadow: none !important;
+}
+
+@layer utilities {
+  .btn-compact { height: 2rem; padding-inline: 0.625rem; font-size: 0.875rem; } /* h-8 px-2.5 text-sm */
+  .btn-compact-xs { height: 1.75rem; padding-inline: 0.5rem; font-size: 0.75rem; } /* h-7 */
+  .btn-icon { height: 2rem; width: 2rem; padding: 0; }
 }

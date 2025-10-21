@@ -17,6 +17,32 @@ const kernelDensity = (values: number[], samples: number[], bandwidth: number) =
     return { x: sample, y: density };
   });
 
+const toNums = (arr: unknown[] | undefined | null): number[] =>
+  (arr ?? [])
+    .map((value) => Number(value))
+    .filter((num) => Number.isFinite(num));
+
+const isFiniteNum = (value: unknown): value is number => Number.isFinite(Number(value));
+
+function finiteSummary(values: number[]) {
+  if (!values.length) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const q = (p: number) => {
+    const idx = (sorted.length - 1) * p;
+    const lo = Math.floor(idx);
+    const hi = Math.ceil(idx);
+    const w = idx - lo;
+    return sorted[lo] * (1 - w) + sorted[hi] * w;
+  };
+  return {
+    min: sorted[0],
+    q1: q(0.25),
+    median: q(0.5),
+    q3: q(0.75),
+    max: sorted[sorted.length - 1]
+  };
+}
+
 type ViolinProps = {
   feature: string;
   values: Array<{ diagnosis: Diagnosis; value: number }>;
@@ -25,44 +51,69 @@ type ViolinProps = {
 
 export function ViolinLike({ feature, values, showBox = false }: ViolinProps) {
   const grouped = useMemo(() => {
-    const malignant = values.filter((value) => value.diagnosis === "M").map((v) => v.value);
-    const benign = values.filter((value) => value.diagnosis === "B").map((v) => v.value);
-    return { malignant, benign };
+    const malignantRaw = values.filter((value) => value.diagnosis === "M").map((v) => v.value);
+    const benignRaw = values.filter((value) => value.diagnosis === "B").map((v) => v.value);
+    return {
+      malignant: toNums(malignantRaw),
+      benign: toNums(benignRaw)
+    };
   }, [values]);
 
-  const densityData = useMemo(() => {
-    const allValues = values.map((v) => v.value);
-    const min = allValues.length ? Math.min(...allValues) : 0;
-    const max = allValues.length ? Math.max(...allValues) : 1;
-    const samples = Array.from({ length: 40 }, (_, index) => min + ((max - min) * index) / 39);
-    const bandwidth = (max - min) / 15 || 1;
-    return {
-      malignant: kernelDensity(grouped.malignant, samples, bandwidth),
-      benign: kernelDensity(grouped.benign, samples, bandwidth),
-      samples
-    };
-  }, [grouped.benign, grouped.malignant, values]);
+  const benignVals = grouped.benign;
+  const malignantVals = grouped.malignant;
 
-  const summaries = useMemo(
-    () => ({
-      malignant: describe(grouped.malignant),
-      benign: describe(grouped.benign)
-    }),
-    [grouped]
+  if (!benignVals.length && !malignantVals.length) {
+    return (
+      <div className="rounded-lg border border-[rgb(var(--border))] p-3 md:p-4 text-sm text-[rgb(var(--muted))]">
+        <div className="flex h-full items-center justify-center text-center">
+          No data available for {feature}.
+        </div>
+      </div>
+    );
+  }
+
+  const allValues = [...benignVals, ...malignantVals];
+  const minX = Math.min(...allValues);
+  const maxX = Math.max(...allValues);
+  if (!Number.isFinite(minX) || !Number.isFinite(maxX) || minX === Infinity || maxX === -Infinity) {
+    return null;
+  }
+
+  const pad = minX === maxX ? Math.max(1, Math.abs(minX) * 0.01 + 1) : 0;
+  const domainMin = minX - pad;
+  const domainMax = maxX + pad;
+  const domainSpan = domainMax - domainMin;
+
+  if (!Number.isFinite(domainSpan) || domainSpan <= 0) {
+    return null;
+  }
+
+  const sampleCount = 40;
+  const samples = Array.from(
+    { length: sampleCount },
+    (_, index) => domainMin + (domainSpan * index) / (sampleCount - 1 || 1)
   );
+  const bandwidth = domainSpan / 15 || 1;
+
+  const malignantDensity = kernelDensity(malignantVals, samples, bandwidth);
+  const benignDensity = kernelDensity(benignVals, samples, bandwidth);
 
   const maxDensity = Math.max(
-    ...densityData.malignant.map((point) => point.y),
-    ...densityData.benign.map((point) => point.y),
-    0.001
+    0.001,
+    ...malignantDensity.map((point) => point.y),
+    ...benignDensity.map((point) => point.y)
   );
 
   const width = 260;
   const height = 200;
 
-  const domainSpan = densityData.samples.at(-1)! - densityData.samples[0] || 1;
-  const scaleX = (value: number) => ((value - densityData.samples[0]) / domainSpan) * width;
+  const scaleX = (value: number) => ((value - domainMin) / domainSpan) * width;
   const scaleY = (value: number) => (value / maxDensity) * (width / 4);
+
+  const sumM = malignantVals.length ? finiteSummary(malignantVals) : null;
+  const sumB = benignVals.length ? finiteSummary(benignVals) : null;
+  const malignantSummary = describe(malignantVals);
+  const benignSummary = describe(benignVals);
 
   const toPath = (data: { x: number; y: number }[], direction: 1 | -1) => {
     if (!data.length) return "";
@@ -89,26 +140,30 @@ export function ViolinLike({ feature, values, showBox = false }: ViolinProps) {
           </linearGradient>
         </defs>
         <rect width="100%" height="100%" fill="transparent" />
-        <path d={toPath(densityData.malignant, 1)} fill="url(#violin-m)" stroke="rgb(var(--malignant))" strokeWidth={1.5} />
-        <path d={toPath(densityData.benign, -1)} fill="url(#violin-b)" stroke="rgb(var(--benign))" strokeWidth={1.5} />
+        <path d={toPath(malignantDensity, 1)} fill="url(#violin-m)" stroke="rgb(var(--malignant))" strokeWidth={1.5} />
+        <path d={toPath(benignDensity, -1)} fill="url(#violin-b)" stroke="rgb(var(--benign))" strokeWidth={1.5} />
         {showBox ? (
           <g>
-            <line
-              x1={scaleX(summaries.malignant.median)}
-              x2={scaleX(summaries.malignant.median)}
-              y1={height / 2}
-              y2={height}
-              stroke="rgb(var(--malignant))"
-              strokeWidth={2}
-            />
-            <line
-              x1={scaleX(summaries.benign.median)}
-              x2={scaleX(summaries.benign.median)}
-              y1={0}
-              y2={height / 2}
-              stroke="rgb(var(--benign))"
-              strokeWidth={2}
-            />
+            {sumM && isFiniteNum(sumM.median) ? (
+              <line
+                x1={scaleX(sumM.median)}
+                x2={scaleX(sumM.median)}
+                y1={height / 2}
+                y2={height}
+                stroke="rgb(var(--malignant))"
+                strokeWidth={2}
+              />
+            ) : null}
+            {sumB && isFiniteNum(sumB.median) ? (
+              <line
+                x1={scaleX(sumB.median)}
+                x2={scaleX(sumB.median)}
+                y1={0}
+                y2={height / 2}
+                stroke="rgb(var(--benign))"
+                strokeWidth={2}
+              />
+            ) : null}
           </g>
         ) : null}
       </svg>
@@ -116,15 +171,15 @@ export function ViolinLike({ feature, values, showBox = false }: ViolinProps) {
         <div>
           <span className="font-semibold text-[rgb(var(--malignant))]">Malignant</span>
           <div className="mt-1 flex flex-wrap gap-2">
-            <span>μ {summaries.malignant.mean.toFixed(2)}</span>
-            <span>σ {summaries.malignant.std.toFixed(2)}</span>
+            <span>μ {malignantSummary.mean.toFixed(2)}</span>
+            <span>σ {malignantSummary.std.toFixed(2)}</span>
           </div>
         </div>
         <div>
           <span className="font-semibold text-[rgb(var(--benign))]">Benign</span>
           <div className="mt-1 flex flex-wrap gap-2">
-            <span>μ {summaries.benign.mean.toFixed(2)}</span>
-            <span>σ {summaries.benign.std.toFixed(2)}</span>
+            <span>μ {benignSummary.mean.toFixed(2)}</span>
+            <span>σ {benignSummary.std.toFixed(2)}</span>
           </div>
         </div>
       </div>

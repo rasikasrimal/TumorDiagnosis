@@ -47,6 +47,7 @@ export function ColumnMultiSelect({ options, selected, onChange }: ColumnMultiSe
       <Button
         type="button"
         variant="outline"
+        size="xs"
         className="min-w-[180px] justify-between"
         onClick={() => setOpen((prev) => !prev)}
         aria-haspopup="listbox"
@@ -69,7 +70,7 @@ export function ColumnMultiSelect({ options, selected, onChange }: ColumnMultiSe
           </div>
           <div className="flex max-h-60 flex-col gap-2 overflow-auto pr-1">
             {options.map((option) => (
-              <label key={option} className="flex items-center gap-3 text-sm">
+              <label key={option} className="flex items-center gap-2 text-sm">
                 <Checkbox
                   checked={selected.includes(option)}
                   onCheckedChange={(next) => toggle(option, next)}

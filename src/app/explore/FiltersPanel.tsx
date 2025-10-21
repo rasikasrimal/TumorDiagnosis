@@ -99,7 +99,7 @@ export function FiltersPanel({ features, selectedFeatures, diagnosis, standardiz
           className="w-full"
         />
       </div>
-      <div className="flex items-center justify-between gap-3 rounded-md border border-[rgb(var(--border))] px-3 py-2">
+      <div className="flex items-center justify-between gap-2 rounded-md border border-[rgb(var(--border))] px-3 py-2">
         <div>
           <div className="text-sm font-medium text-[rgb(var(--fg))]">Standardize</div>
           <div className="text-xs text-[rgb(var(--muted))]">Z-score normalize selected features</div>
@@ -113,7 +113,7 @@ export function FiltersPanel({ features, selectedFeatures, diagnosis, standardiz
         <ColumnMultiSelect options={features} selected={storeFeatures.length ? storeFeatures : selectedFeatures} onChange={handleFeaturesChange} />
         <p className="mt-2 text-xs text-[rgb(var(--muted))]">Select up to 12 features for dense visualizations.</p>
       </div>
-      <Button variant="outline" className="justify-center" onClick={handleReset}>
+      <Button variant="outline" size="xs" className="justify-center" onClick={handleReset}>
         Reset filters
       </Button>
     </div>
@@ -127,7 +127,8 @@ export function FiltersPanel({ features, selectedFeatures, diagnosis, standardiz
         </div>
         <Button
           variant="outline"
-          className="h-9 px-3 text-xs md:hidden"
+          size="xs"
+          className="md:hidden"
           onClick={() => setOpen((prev) => !prev)}
           aria-expanded={open}
           aria-controls="filters-panel"

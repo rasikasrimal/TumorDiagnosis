@@ -1,44 +1,52 @@
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-type Variant = "default" | "accent" | "outline";
-type Size = "sm" | "md" | "lg" | "icon";
-
-const variantClasses: Record<Variant, string> = {
-  default:
-    "border border-[rgb(var(--border))] bg-transparent text-[rgb(var(--fg))] hover:ring-1 hover:ring-[rgb(var(--border))]",
-  accent: "border border-[rgb(var(--accent))] bg-[rgb(var(--accent))] text-white hover:ring-1 hover:ring-[rgb(var(--accent))]",
-  outline: "border border-[rgb(var(--border))] bg-transparent text-[rgb(var(--fg))] hover:ring-1 hover:ring-[rgb(var(--border))]"
-};
-
-const sizeClasses: Record<Size, string> = {
-  sm: "px-2.5 py-1.5 text-xs",
-  md: "px-3 py-1.5 text-sm",
-  lg: "px-4 py-2 text-base",
-  icon: "h-9 w-9 p-0"
-};
-
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: Variant;
-  size?: Size;
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "md", ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-md font-medium transition focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] disabled:pointer-events-none disabled:opacity-50",
-          variantClasses[variant],
-          sizeClasses[size],
-          className
-        )}
-        {...props}
-      />
-    );
+const buttonVariants = cva(
+  "inline-flex items-center justify-center select-none whitespace-nowrap " +
+    "rounded-md border border-[rgb(var(--border))] " +
+    "bg-[rgb(var(--bg))] text-[rgb(var(--fg))] " +
+    "hover:ring-1 hover:ring-[rgb(var(--border))] " +
+    "focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] shadow-none",
+  {
+    variants: {
+      variant: {
+        default: "",
+        outline: "bg-transparent",
+        ghost: "bg-transparent border-transparent",
+        link: "border-transparent underline-offset-4 hover:underline"
+      },
+      size: {
+        xs: "h-7 px-2.5 text-xs gap-1",
+        sm: "h-8 px-3 text-sm gap-1.5",
+        md: "h-9 px-3.5 text-sm gap-2",
+        lg: "h-10 px-4 text-base gap-2"
+      },
+      icon: {
+        true: "px-0 aspect-square",
+        false: ""
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "sm",
+      icon: false
+    }
   }
 );
-Button.displayName = "Button";
 
-export { Button };
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  icon?: boolean;
+}
+
+export function Button({ className, icon, size, variant, ...props }: ButtonProps) {
+  return (
+    <button
+      className={cn(buttonVariants({ size, variant, icon }), className)}
+      {...props}
+    />
+  );
+}
