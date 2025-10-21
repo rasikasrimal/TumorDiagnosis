@@ -12,7 +12,7 @@ export function MetricCard({ label, value, description, className }: MetricCardP
     <div
       tabIndex={0}
       className={cn(
-        "flex flex-col gap-2 rounded-lg border border-[rgb(var(--border))] p-3 md:p-4 transition focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] hover:ring-1 hover:ring-[rgb(var(--border))]",
+        "flex flex-col gap-2 rounded-lg border border-[rgb(var(--border))] p-3 md:p-3 transition focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] hover:ring-1 hover:ring-[rgb(var(--border))]",
         className
       )}
     >
