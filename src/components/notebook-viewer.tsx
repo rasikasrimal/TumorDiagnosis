@@ -1,8 +1,7 @@
 'use client';
 
 import { Fragment } from 'react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/github';
+import Highlight, { defaultProps, themes } from 'prism-react-renderer';
 import type { NotebookCell } from '@/types/data';
 
 interface NotebookViewerProps {
@@ -25,7 +24,12 @@ export function NotebookViewer({ title, cells }: NotebookViewerProps) {
             ) : null}
             {cell.type === 'code' ? (
               <div className="space-y-3">
-                <Highlight {...defaultProps} theme={theme} code={cell.source.join('')} language={cell.language ?? 'python'}>
+                <Highlight
+                  {...defaultProps}
+                  theme={themes.github}
+                  code={cell.source.join('')}
+                  language={cell.language ?? 'python'}
+                >
                   {({ className, style, tokens, getLineProps, getTokenProps }) => (
                     <pre className={`${className} overflow-x-auto rounded-md border border-border bg-muted/40 p-3 text-xs`} style={style}>
                       {tokens.map((line, i) => (
