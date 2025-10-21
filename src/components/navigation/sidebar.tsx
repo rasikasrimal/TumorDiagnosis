@@ -2,16 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChartBarIcon, HomeIcon, TableCellsIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import { ChartBarIcon, CircleStackIcon, Cog6ToothIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { AuthStatus } from '@/components/navigation/auth-status';
 import { clsx } from 'clsx';
 
 const links = [
   { href: '/', label: 'Overview', icon: HomeIcon },
-  { href: '/charts', label: 'Charts', icon: ChartBarIcon },
-  { href: '/explorer', label: 'Explorer', icon: TableCellsIcon },
-  { href: '/notebooks', label: 'Notebooks', icon: DocumentTextIcon }
+  { href: '/datasets', label: 'Datasets', icon: CircleStackIcon },
+  { href: '/analysis', label: 'Analysis', icon: ChartBarIcon },
+  { href: '/settings', label: 'Settings', icon: Cog6ToothIcon }
 ];
 
 /**

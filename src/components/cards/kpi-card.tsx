@@ -1,29 +1,41 @@
 import type { ReactNode } from 'react';
+import { clsx } from 'clsx';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+type Tone = 'neutral' | 'success' | 'warning' | 'danger';
 
 interface KpiCardProps {
   title: string;
   value: string;
-  changeLabel?: string;
-  changeValue?: string;
+  description?: string;
   icon?: ReactNode;
+  tone?: Tone;
+  className?: string;
 }
 
-/**
- * Compact key performance indicator card with optional change indicator.
- */
-export function KpiCard({ title, value, changeLabel, changeValue, icon }: KpiCardProps) {
+const toneMap: Record<Tone, string> = {
+  neutral: 'text-foreground',
+  success: 'text-emerald-600 dark:text-emerald-400',
+  warning: 'text-amber-600 dark:text-amber-400',
+  danger: 'text-destructive'
+};
+
+export function KpiCard({ title, value, description, icon, tone = 'neutral', className }: KpiCardProps) {
   return (
-    <article className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-background/70 p-5 backdrop-blur">
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <span>{title}</span>
-        {icon}
-      </div>
-      <div className="text-2xl font-semibold">{value}</div>
-      {changeLabel && changeValue ? (
-        <p className="text-xs text-muted-foreground">
-          {changeLabel}: <span className="font-medium text-foreground">{changeValue}</span>
-        </p>
-      ) : null}
-    </article>
+    <Card
+      className={clsx(
+        'insights-fade-in border-border/70 bg-background/90 transition-transform duration-200 hover:-translate-y-0.5 hover:border-accent/70 focus-within:-translate-y-0.5',
+        className
+      )}
+    >
+      <CardHeader className="space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <CardTitle className="text-sm font-medium uppercase tracking-wide text-muted-foreground/80">{title}</CardTitle>
+          {icon ? <span className="rounded-full border border-border/60 bg-muted/40 p-2 text-muted-foreground">{icon}</span> : null}
+        </div>
+        <div className={clsx('text-3xl font-semibold leading-tight', toneMap[tone])}>{value}</div>
+        {description ? <CardDescription className="text-sm text-muted-foreground">{description}</CardDescription> : null}
+      </CardHeader>
+    </Card>
   );
 }

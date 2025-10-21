@@ -9,9 +9,9 @@ import { AuthStatus } from '@/components/navigation/auth-status';
 
 const links = [
   { href: '/', label: 'Overview' },
-  { href: '/charts', label: 'Charts' },
-  { href: '/explorer', label: 'Explorer' },
-  { href: '/notebooks', label: 'Notebooks' }
+  { href: '/datasets', label: 'Datasets' },
+  { href: '/analysis', label: 'Analysis' },
+  { href: '/settings', label: 'Settings' }
 ];
 
 export function MobileNav() {
