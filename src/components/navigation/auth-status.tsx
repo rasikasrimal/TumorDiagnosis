@@ -27,7 +27,7 @@ export function AuthStatus() {
     return (
       <button
         type="button"
-        className="inline-flex items-center justify-center rounded-md border border-dashed border-border px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted"
+        className="inline-flex items-center justify-center rounded-full border border-dashed border-border/60 bg-background/60 px-4 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted/40"
       >
         Connect authentication
       </button>
@@ -35,7 +35,7 @@ export function AuthStatus() {
   }
 
   return (
-    <div className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm">
+    <div className="flex items-center justify-between gap-3 rounded-full border border-border/60 bg-background/60 px-4 py-2 text-sm">
       <span className="font-medium">{user.name}</span>
       <span className="text-xs uppercase tracking-wide text-muted-foreground">Viewer</span>
     </div>

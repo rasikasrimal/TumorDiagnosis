@@ -12,7 +12,7 @@ export function NotebooksClient() {
   const notebook = notebooks.find((entry) => entry.id === activeId) ?? notebooks[0];
 
   if (isLoading) {
-    return <div className="h-64 animate-pulse rounded-xl border border-border bg-muted/40" />;
+    return <div className="h-64 animate-pulse rounded-2xl border border-border/60 bg-muted/40" />;
   }
 
   if (error) {
@@ -21,7 +21,7 @@ export function NotebooksClient() {
         title="Failed to load notebooks"
         description={error.message}
         action={
-          <button onClick={() => refresh()} className="rounded-md border border-border px-3 py-2 text-sm">
+          <button onClick={() => refresh()} className="rounded-full border border-border/60 px-3 py-2 text-sm hover:bg-muted/40">
             Retry
           </button>
         }
@@ -44,7 +44,7 @@ export function NotebooksClient() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 lg:grid-cols-[minmax(0,280px)_1fr]">
-        <aside className="space-y-4 rounded-xl border border-border bg-background/60 p-5">
+        <aside className="space-y-4 rounded-2xl border border-border/60 bg-background/70 p-5 backdrop-blur">
           <div>
             <h2 className="text-base font-semibold">Notebook library</h2>
             <p className="text-sm text-muted-foreground">Select a notebook to render below. Upload new files at any time.</p>
@@ -56,7 +56,11 @@ export function NotebooksClient() {
                 <button
                   type="button"
                   onClick={() => setActiveId(entry.id)}
-                  className={`w-full rounded-md border border-border px-3 py-2 text-left text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-ring ${notebook.id === entry.id ? 'bg-secondary text-secondary-foreground' : 'hover:bg-muted'}`}
+                  className={`w-full rounded-xl border border-border/60 px-3 py-2 text-left text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-ring/60 ${
+                    notebook.id === entry.id
+                      ? 'bg-secondary/90 text-secondary-foreground'
+                      : 'bg-background/60 hover:bg-muted/40'
+                  }`}
                 >
                   <span className="block font-medium">{entry.name}</span>
                   <span className="text-xs text-muted-foreground">Uploaded {new Date(entry.uploadedAt).toLocaleString()}</span>

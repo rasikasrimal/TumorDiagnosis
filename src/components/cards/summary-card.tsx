@@ -6,7 +6,7 @@ interface SummaryCardProps {
 
 export function SummaryCard({ title, description, action }: SummaryCardProps) {
   return (
-    <section className="flex flex-col justify-between gap-3 rounded-xl border border-border bg-background/60 p-5">
+    <section className="flex flex-col justify-between gap-3 rounded-2xl border border-border/60 bg-background/70 p-5 backdrop-blur">
       <div>
         <h3 className="text-base font-semibold">{title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
