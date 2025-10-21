@@ -1,0 +1,35 @@
+{
+  "name": "tumor-diagnosis-analytics",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "tailwind-merge": "2.5.2",
+    "next": "15.5.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "recharts": "2.12.7",
+    "tailwindcss": "4.1.13",
+    "zustand": "5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.1",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.2",
+    "autoprefixer": "10.4.20",
+    "eslint": "9.13.0",
+    "eslint-config-next": "15.5.2",
+    "postcss": "8.4.47",
+    "prettier": "3.4.1",
+    "tailwindcss-animate": "1.0.7",
+    "typescript": "5.6.3",
+    "vitest": "2.1.3"
+  }
+}
