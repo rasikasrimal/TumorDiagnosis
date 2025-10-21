@@ -34,15 +34,15 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
   return (
     <header className="flex items-center gap-4 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg))] px-4 py-3">
       <div className="flex items-center gap-2 lg:hidden">
-        <Button variant="outline" size="icon" onClick={onMenu} aria-label="Open navigation">
-          <MenuIcon className="h-5 w-5" />
+        <Button variant="outline" icon size="xs" onClick={onMenu} aria-label="Open navigation">
+          <MenuIcon className="h-4 w-4" />
         </Button>
       </div>
       <div className="hidden flex-col lg:flex">
         <span className="text-xs uppercase text-[rgb(var(--muted))]">Breast Cancer EDA</span>
         <span className="text-lg font-semibold">Tumor Diagnostics Analytics</span>
       </div>
-      <div className="flex flex-1 items-center gap-3">
+      <div className="flex flex-1 items-center gap-2">
         <Input
           value={search}
           onChange={(event) => setSearch(event.target.value)}
@@ -50,7 +50,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
           className="max-w-lg"
           aria-label="Search"
         />
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-2">
           <div className="hidden items-center gap-2 rounded-md border border-[rgb(var(--border))] px-3 py-2 text-xs font-medium text-[rgb(var(--muted))] sm:flex">
             <FilterIcon className="h-4 w-4" />
             <span>{diagnosisFilter}</span>

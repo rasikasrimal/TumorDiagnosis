@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "class-variance-authority": [
+        "./src/lib/class-variance-authority"
       ]
     },
     "plugins": [

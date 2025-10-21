@@ -26,7 +26,7 @@ export function DataTable({ rows, columns, visibleColumns, title, controls, empt
 
   return (
     <section className="rounded-lg border border-[rgb(var(--border))]">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgb(var(--border))] px-3 py-3 md:px-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border))] px-3 py-3 md:px-4">
         <div>
           {title ? <h3 className="text-sm font-semibold uppercase tracking-wide text-[rgb(var(--muted))]">{title}</h3> : null}
           <p className="text-xs text-[rgb(var(--muted))]">{rows.length} rows</p>

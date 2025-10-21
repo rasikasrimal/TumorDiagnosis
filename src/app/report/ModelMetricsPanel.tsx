@@ -43,12 +43,12 @@ export function ModelMetricsPanel({ initial }: ModelMetricsPanelProps) {
 
   return (
     <div className="rounded-lg border border-[rgb(var(--border))] p-3 md:p-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h3 className="text-lg font-semibold text-[rgb(var(--fg))]">Model metrics</h3>
           <p className="text-sm text-[rgb(var(--muted))]">Paste new metrics JSON to update this section.</p>
         </div>
-        <Button variant="outline" onClick={handleApply}>
+        <Button variant="outline" size="xs" onClick={handleApply}>
           Apply JSON
         </Button>
       </div>

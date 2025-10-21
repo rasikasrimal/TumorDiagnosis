@@ -43,7 +43,7 @@ export function DownloadButton({ rows, columns, filename = "subset.csv" }: Downl
   };
 
   return (
-    <Button variant="outline" onClick={handleDownload} className="gap-2">
+    <Button variant="outline" size="xs" onClick={handleDownload} className="gap-1.5">
       <DownloadIcon className="h-4 w-4" />
       Export CSV
     </Button>
