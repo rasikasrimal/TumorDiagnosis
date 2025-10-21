@@ -34,7 +34,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
   return (
     <header className="flex items-center gap-4 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg))] px-4 py-3">
       <div className="flex items-center gap-2 lg:hidden">
-        <Button variant="outline" className="h-10 w-10" onClick={onMenu} aria-label="Open navigation">
+        <Button variant="outline" size="icon" onClick={onMenu} aria-label="Open navigation">
           <MenuIcon className="h-5 w-5" />
         </Button>
       </div>

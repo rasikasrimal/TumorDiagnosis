@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 type Variant = "default" | "accent" | "outline";
-type Size = "sm" | "md" | "lg";
+type Size = "sm" | "md" | "lg" | "icon";
 
 const variantClasses: Record<Variant, string> = {
   default:
@@ -12,9 +12,10 @@ const variantClasses: Record<Variant, string> = {
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-2 py-1 text-xs",
-  md: "px-3 py-2 text-sm",
-  lg: "px-4 py-2 text-base"
+  sm: "px-2.5 py-1.5 text-xs",
+  md: "px-3 py-1.5 text-sm",
+  lg: "px-4 py-2 text-base",
+  icon: "h-9 w-9 p-0"
 };
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

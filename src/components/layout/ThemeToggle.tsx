@@ -43,12 +43,7 @@ export function ThemeToggle() {
   const toggleTheme = () => setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
   return (
-    <Button
-      aria-label="Toggle theme"
-      variant="outline"
-      className="h-10 w-10 rounded-full"
-      onClick={toggleTheme}
-    >
+    <Button aria-label="Toggle theme" variant="outline" size="icon" className="rounded-full" onClick={toggleTheme}>
       {theme === "light" ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
     </Button>
   );
