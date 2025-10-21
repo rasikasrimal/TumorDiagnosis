@@ -5,7 +5,8 @@ body {
 }
 
 a {
-  @apply text-accent underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] focus:ring-offset-2 focus:ring-offset-[rgb(var(--bg))];
+  color: rgb(var(--accent));
+  @apply underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] focus:ring-offset-2 focus:ring-offset-[rgb(var(--bg))];
 }
 
 :focus-visible {

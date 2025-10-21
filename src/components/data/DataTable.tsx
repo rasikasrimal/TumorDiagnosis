@@ -58,8 +58,11 @@ export function DataTable({ rows, columns, visibleColumns, title, controls, empt
               </tr>
             </thead>
             <tbody>
-              {rows.map((row) => (
-                <tr key={row.id} className="border-b border-[rgb(var(--border))] odd:bg-[rgb(var(--bg))] even:bg-[rgb(var(--bg))]/60">
+              {rows.map((row, index) => (
+                <tr
+                  key={`${row.id}-${index}`}
+                  className="border-b border-[rgb(var(--border))] odd:bg-[rgb(var(--bg))] even:bg-[rgb(var(--bg))]/60"
+                >
                   <td className="px-3 py-2 font-mono text-xs">{row.id}</td>
                   <td className="px-3 py-2 text-sm font-medium text-[rgb(var(--fg))]">
                     {row.diagnosis === "M" ? "Malignant" : "Benign"}
