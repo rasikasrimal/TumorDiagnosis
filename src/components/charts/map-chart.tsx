@@ -13,7 +13,7 @@ const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 
 export function MapChart({ points, title, description }: MapChartProps) {
   return (
-    <section className="space-y-3 rounded-xl border border-border bg-background/60 p-5">
+    <section className="space-y-3 rounded-2xl border border-border/60 bg-background/70 p-5 backdrop-blur">
       <header>
         <h3 className="text-base font-semibold">{title}</h3>
         {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}

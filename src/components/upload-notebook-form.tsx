@@ -47,7 +47,7 @@ export function UploadNotebookForm({ onComplete }: UploadNotebookFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-xl border border-border bg-background/60 p-5">
+    <form onSubmit={handleSubmit} className="space-y-3 rounded-2xl border border-border/60 bg-background/70 p-6 backdrop-blur">
       <div>
         <h3 className="text-base font-semibold">Upload notebook</h3>
         <p className="text-sm text-muted-foreground">Drop in executed Jupyter notebooks to review code and outputs.</p>
@@ -56,11 +56,11 @@ export function UploadNotebookForm({ onComplete }: UploadNotebookFormProps) {
         type="file"
         name="file"
         accept=".ipynb,application/x-ipynb+json"
-        className="w-full rounded-md border border-border px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-2 file:text-sm file:font-medium"
+        className="w-full rounded-md border border-border/60 bg-background/60 px-3 py-2 text-sm backdrop-blur file:mr-3 file:rounded-md file:border-0 file:bg-muted file:px-3 file:py-2 file:text-sm file:font-medium"
       />
       <button
         type="submit"
-        className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent/80 focus:outline-none focus:ring-2 focus:ring-ring"
+        className="inline-flex items-center justify-center gap-2 rounded-full border border-border/60 bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-ring/60"
         disabled={status === 'loading'}
       >
         <ArrowUpTrayIcon className="h-4 w-4" />

@@ -15,7 +15,7 @@ export function OverviewClient() {
     return (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {Array.from({ length: 4 }).map((_, index) => (
-          <div key={index} className="h-32 animate-pulse rounded-xl border border-border bg-muted/40" />
+          <div key={index} className="h-32 animate-pulse rounded-2xl border border-border/60 bg-muted/40" />
         ))}
       </div>
     );
@@ -27,7 +27,7 @@ export function OverviewClient() {
         title="Failed to load datasets"
         description={error.message}
         action={
-          <button onClick={() => refresh()} className="rounded-md border border-border px-3 py-2 text-sm">
+          <button onClick={() => refresh()} className="rounded-full border border-border/60 px-3 py-2 text-sm hover:bg-muted/40">
             Retry
           </button>
         }
@@ -83,7 +83,7 @@ export function OverviewClient() {
           title="Active dataset"
           description={`Currently highlighting ${primaryDataset.name} with ${primaryDataset.rowCount.toLocaleString()} rows. Use the explorer to pivot through fields or refresh with a new upload.`}
           action={
-            <button className="rounded-md border border-border px-3 py-2 text-sm" onClick={() => refresh()}>
+            <button className="rounded-full border border-border/60 px-3 py-2 text-sm transition-colors hover:bg-muted/40" onClick={() => refresh()}>
               Refresh data
             </button>
           }
@@ -99,7 +99,7 @@ export function OverviewClient() {
         />
       </section>
 
-      <section className="space-y-3 rounded-xl border border-border bg-background/60 p-5">
+      <section className="space-y-3 rounded-2xl border border-border/60 bg-background/70 p-5 backdrop-blur">
         <header className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="text-base font-semibold">Available datasets</h3>
@@ -108,7 +108,7 @@ export function OverviewClient() {
           <button
             type="button"
             onClick={() => refresh()}
-            className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            className="inline-flex items-center gap-2 rounded-full border border-border/60 px-3 py-2 text-sm transition-colors hover:bg-muted/40 focus:outline-none focus:ring-2 focus:ring-ring/60"
           >
             <ArrowPathIcon className="h-4 w-4" />
             Refresh
@@ -116,7 +116,7 @@ export function OverviewClient() {
         </header>
         <ul className="space-y-3">
           {datasets.map((dataset) => (
-            <li key={dataset.id} className="rounded-lg border border-border bg-background px-4 py-3">
+            <li key={dataset.id} className="rounded-2xl border border-border/60 bg-background/80 px-4 py-3 backdrop-blur">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-medium">{dataset.name}</p>

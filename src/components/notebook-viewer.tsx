@@ -1,8 +1,7 @@
 'use client';
 
 import { Fragment } from 'react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/github';
+import Highlight, { defaultProps, themes } from 'prism-react-renderer';
 import type { NotebookCell } from '@/types/data';
 
 interface NotebookViewerProps {
@@ -12,22 +11,27 @@ interface NotebookViewerProps {
 
 export function NotebookViewer({ title, cells }: NotebookViewerProps) {
   return (
-    <article className="space-y-4 rounded-xl border border-border bg-background/60 p-5">
+    <article className="space-y-4 rounded-2xl border border-border/60 bg-background/70 p-6 backdrop-blur">
       <header>
         <h3 className="text-base font-semibold">{title}</h3>
         <p className="text-sm text-muted-foreground">Review executed notebook cells with preserved output.</p>
       </header>
       <div className="space-y-6">
         {cells.map((cell, index) => (
-          <section key={cell.id ?? index} className="space-y-3 rounded-lg border border-border bg-background p-4">
+          <section key={cell.id ?? index} className="space-y-3 rounded-xl border border-border/60 bg-background/80 p-4 backdrop-blur">
             {cell.type === 'markdown' ? (
               <div className="markdown text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: cell.html ?? '' }} />
             ) : null}
             {cell.type === 'code' ? (
               <div className="space-y-3">
-                <Highlight {...defaultProps} theme={theme} code={cell.source.join('')} language={cell.language ?? 'python'}>
+                <Highlight
+                  {...defaultProps}
+                  theme={themes.nightOwl}
+                  code={cell.source.join('')}
+                  language={cell.language ?? 'python'}
+                >
                   {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                    <pre className={`${className} overflow-x-auto rounded-md border border-border bg-muted/40 p-3 text-xs`} style={style}>
+                    <pre className={`${className} overflow-x-auto rounded-lg border border-border/60 bg-muted/40 p-3 text-xs`} style={style}>
                       {tokens.map((line, i) => (
                         <div key={i} {...getLineProps({ line, key: i })}>
                           {line.map((token, key) => (
@@ -39,7 +43,7 @@ export function NotebookViewer({ title, cells }: NotebookViewerProps) {
                   )}
                 </Highlight>
                 {cell.outputs?.length ? (
-                  <div className="space-y-2 rounded-md border border-dashed border-border bg-muted/40 p-3 text-xs">
+                  <div className="space-y-2 rounded-lg border border-dashed border-border/60 bg-muted/30 p-3 text-xs">
                     {cell.outputs.map((output, outputIndex) => (
                       <Fragment key={outputIndex}>
                         {output.type === 'stream' ? (

@@ -41,13 +41,13 @@ export function DataTable({ data }: DataTableProps) {
   });
 
   return (
-    <section className="space-y-4 rounded-xl border border-border bg-background/60 p-5">
+    <section className="space-y-4 rounded-2xl border border-border/60 bg-background/70 p-6 backdrop-blur">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-base font-semibold">Table explorer</h3>
           <p className="text-sm text-muted-foreground">Sort, search, and filter your dataset without leaving the browser.</p>
         </div>
-        <label className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm focus-within:ring-2 focus-within:ring-ring">
+        <label className="flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-2 text-sm backdrop-blur focus-within:ring-2 focus-within:ring-ring/60">
           <MagnifyingGlassIcon className="h-4 w-4 text-muted-foreground" />
           <input
             value={globalFilter ?? ''}
@@ -60,7 +60,7 @@ export function DataTable({ data }: DataTableProps) {
 
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-border text-sm">
-          <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
+          <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground/80">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -82,7 +82,7 @@ export function DataTable({ data }: DataTableProps) {
           </thead>
           <tbody className="divide-y divide-border">
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-muted/60">
+              <tr key={row.id} className="transition-colors hover:bg-muted/40">
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="whitespace-nowrap px-3 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

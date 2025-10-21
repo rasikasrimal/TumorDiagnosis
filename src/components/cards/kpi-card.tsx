@@ -13,7 +13,7 @@ interface KpiCardProps {
  */
 export function KpiCard({ title, value, changeLabel, changeValue, icon }: KpiCardProps) {
   return (
-    <article className="flex flex-col gap-3 rounded-xl border border-border bg-background/60 p-4">
+    <article className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-background/70 p-5 backdrop-blur">
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <span>{title}</span>
         {icon}

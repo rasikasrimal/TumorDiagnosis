@@ -21,7 +21,7 @@ export function ThemeToggle({ className, ...props }: ButtonHTMLAttributes<HTMLBu
     <button
       type="button"
       aria-label="Toggle theme"
-      className={`inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-sm transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring ${className ?? ''}`}
+      className={`inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-sm transition-colors hover:bg-muted/40 focus:outline-none focus:ring-2 focus:ring-ring/60 ${className ?? ''}`}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       {...props}
     >

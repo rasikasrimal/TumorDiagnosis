@@ -21,12 +21,13 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-full w-full flex-col gap-6 border-r border-border bg-background/80 p-4">
+    <aside className="flex h-full w-full flex-col gap-6 rounded-3xl border border-border/60 bg-background/70 p-6 backdrop-blur">
       <div>
-        <Link href="/" className="block text-lg font-semibold tracking-tight">
+        <Link href="/" className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
           Insights Studio
         </Link>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           Analytics workspace with secure upload pipeline.
         </p>
       </div>
@@ -39,10 +40,10 @@ export function Sidebar() {
               key={href}
               href={href}
               className={clsx(
-                'flex items-center gap-3 rounded-md border border-transparent px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring',
+                'flex items-center gap-3 rounded-xl border border-border/60 px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring/60 backdrop-blur',
                 active
-                  ? 'bg-secondary text-secondary-foreground'
-                  : 'hover:bg-muted hover:text-foreground'
+                  ? 'bg-secondary/90 text-secondary-foreground'
+                  : 'bg-background/60 hover:bg-muted/40 hover:text-foreground'
               )}
             >
               <Icon className="h-5 w-5" aria-hidden />
@@ -52,7 +53,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="mt-auto flex flex-col gap-3 border-t border-dashed border-border pt-4">
+      <div className="mt-auto flex flex-col gap-3 border-t border-dashed border-border/60 pt-4">
         <AuthStatus />
         <ThemeToggle />
       </div>
