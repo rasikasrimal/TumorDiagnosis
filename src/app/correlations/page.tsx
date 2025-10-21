@@ -55,7 +55,7 @@ export default async function CorrelationsPage({
             <div>
               <h2 className="text-lg font-semibold text-[rgb(var(--fg))]">Correlation insights</h2>
               <p className="text-sm text-[rgb(var(--muted))]">
-                {selectedFeatures.length} features analysed, standardized: {standardize ? "yes" : "no"}.
+                {selectedFeatures.length} features analyzed, standardized: {standardize ? "yes" : "no"}.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
